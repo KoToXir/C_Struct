@@ -2,41 +2,36 @@
 #ifndef TYPE_H_
 #define TYPE_H_
 
-/*--------------------------------------------------------------------
- * #define
- *--------------------------------------------------------------------*/
-//データタイプ
-//! boolタイプ
 #define     BOOL       int
-//! byteタイプ(1バイト)
+//! byte(1byte)
 #ifndef BYTE
 #define     BYTE       unsigned char
 #endif
-//! charタイプ(1バイト)
+//! char(1byte)
 #define		CHAR	   char	
-//! unsigned charタイプ(1バイト)
+//! unsigned char(1byte)
 #ifndef UCHAR
 #define     UCHAR      unsigned char
 #endif
-//! shortタイプ(2バイト)
+//! short(2byte)
 #define		SHORT	   int16_t
-//! wordタイプ(2バイト)
+//! word(2byte)
 #define		WORD	   uint16_t
-//! intタイプ(4バイト)
+//! int(4byte)
 #define     INT        int32_t
-//! unsigned intタイプ(4バイト)
+//! unsigned int(4byte)
 #define     UINT       uint32_t
-//! dwordタイプ(4バイト)
+//! dword(4byte)
 #define		DWORD	   uint32_t
-//! floatタイプ(4バイト)
+//! float(4byte)
 #define		FLOAT	   float
-//! longタイプ(8バイト)
+//! long(8byte)
 #define		LONG	   int64_t
-//! ulongタイプ(8バイト)
+//! ulong(8byte)
 #define		ULONG	   uint64_t
-//! doubleタイプ(8バイト)
+//! double(8byte)
 #define		DOUBLE	   double
-//! voidタイプ
+//! void
 #define		VOID	   void
 //! true
 #define     TRUE       1
@@ -47,5 +42,4 @@
 	#define		NULL	   ((void*)0)
 #endif
 
-
-#endif /* TYPE_H_ */
+#endif
