@@ -1,2 +1,4 @@
 ﻿  test.c
+D:\C_Struct\src\main\test.c(22,1): warning C4047: “初始化”:“char *”与“int”的间接级别不同
+D:\C_Struct\src\main\test.c(28,1): warning C4047: “初始化”:“char *”与“int”的间接级别不同
   C_Struct.vcxproj -> D:\C_Struct\x64\Debug\C_Struct.exe
