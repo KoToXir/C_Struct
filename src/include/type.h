@@ -42,4 +42,12 @@
 	#define		NULL	   ((void*)0)
 #endif
 
+#define STRING_EMPTY ""
+#define STRING_LEN_100 100
+
+#define	RES_SUCCESS	0
+#define	RES_PARAM_FAILED	-1
+#define	RES_XALLOC_FAILED	1
+#define	RES_MATCH_FAILED	2
+
 #endif
