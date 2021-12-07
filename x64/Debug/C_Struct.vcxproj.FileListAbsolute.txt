@@ -1,1 +1,4 @@
 D:\C_Struct\x64\Debug\C_Struct.exe
+D:\Project\C_Struct\x64\Debug\C_Struct.exe.lastcodeanalysissucceeded
+D:\Project\C_Struct\x64\Debug\NativeCodeAnalysis.read.1.tlog
+D:\Project\C_Struct\x64\Debug\C_Struct.exe

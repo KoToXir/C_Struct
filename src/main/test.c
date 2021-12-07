@@ -16,7 +16,6 @@ int main()
 
 	for (INT i = 1; i < 100; i++)
 	{
-
 		//CHAR loop[] = { 0 };
 		//strcat(loop, __DATE__);	strcat(loop, STRING_SPACE);	strcat(loop, __TIME__);
 		CHAR temp[10];

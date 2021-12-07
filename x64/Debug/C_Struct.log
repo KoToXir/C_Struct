@@ -1,5 +1,13 @@
 ﻿  map.c
   test.c
-D:\C_Struct\src\main\test.c(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\Project\C_Struct\src\main\test.c(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+  正在运行 C/C++ 代码分析...
   正在生成代码...
-  C_Struct.vcxproj -> D:\C_Struct\x64\Debug\C_Struct.exe
+  C_Struct.vcxproj -> D:\Project\C_Struct\x64\Debug\C_Struct.exe
+D:\Project\C_Struct\src\main\map.c(30): warning C6305: sizeof 和 countof 量值之间可能不一致。使用 sizeof() 调整字节大小。
+D:\Project\C_Struct\src\main\map.c(88): warning C6305: sizeof 和 countof 量值之间可能不一致。使用 sizeof() 调整字节大小。
+D:\Project\C_Struct\src\main\map.c(92): warning C6305: sizeof 和 countof 量值之间可能不一致。使用 sizeof() 调整字节大小。
+D:\Project\C_Struct\src\main\map.c(70): warning C6305: sizeof 和 countof 量值之间可能不一致。使用 sizeof() 调整字节大小。
+D:\Project\C_Struct\src\main\map.c(88): warning C26451: 算术溢出: 使用 4 字节值上的运算符 + ，然后将结果转换到 8 字节值。在调用运算符 + 之前将值强制转换为宽类型可避免溢出(io.2)。
+D:\Project\C_Struct\src\main\map.c(176): warning C6305: sizeof 和 countof 量值之间可能不一致。使用 sizeof() 调整字节大小。
+D:\Project\C_Struct\src\main\map.c(131): warning C6305: sizeof 和 countof 量值之间可能不一致。使用 sizeof() 调整字节大小。
