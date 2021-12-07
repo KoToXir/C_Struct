@@ -43,6 +43,7 @@
 #endif
 
 #define STRING_EMPTY ""
+#define STRING_SPACE " "
 #define STRING_LEN_100 100
 
 #define	RES_SUCCESS	0

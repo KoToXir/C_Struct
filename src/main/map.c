@@ -28,7 +28,7 @@ INT map_get(Map* obj, const CHAR* key, CHAR* value)
 		//key is exitis
 		if (item->key != NULL && strcmp(key, item->key) == 0) {
 			match = TRUE;
-         	strcpy(value,item->value);
+			strcpy(value,item->value);
 			return RES_SUCCESS;
 		}
 	}
@@ -106,8 +106,8 @@ INT map_put(Map* obj, const CHAR* key, const CHAR* value)
 		return RES_PARAM_FAILED;
 	}
 
-	CHAR* key_new;
-	CHAR* value_new;
+	CHAR* key_new = NULL;
+	CHAR* value_new = NULL;
 	BOOL match = FALSE;
 	MapItem* item;
 	for (INT index = 0; index < obj->map_used; index++) {
@@ -116,10 +116,11 @@ INT map_put(Map* obj, const CHAR* key, const CHAR* value)
 		//key is exist
 		if (item->key != NULL && strcmp(key, item->key) == 0) {
 			//create new space
-			value_new = (char*)calloc(1, strlen(value) + 1);
+			value_new = (CHAR*)malloc(strlen(value) + 1);
 			if (value_new == NULL) {
 				return RES_XALLOC_FAILED;
 			}
+			memset(value_new, 0x00, strlen(value + 1));
 			strcpy(value_new, value);
 			//delete old space
 			free(item->value);
@@ -152,14 +153,18 @@ INT map_put(Map* obj, const CHAR* key, const CHAR* value)
 
 		//add new item
 		item = (MapItem*)obj->map + obj->map_used * sizeof(MapItem);
-		key_new = (char*)calloc(1, strlen(key) + 1);
+		key_new = (CHAR*)malloc(strlen(key) + 1);
 		if (key_new == NULL) {
 			return RES_XALLOC_FAILED;
 		}
-		value_new = (char*)calloc(1, strlen(value) + 1);
+		memset(key_new, 0x00, strlen(key) + 1);
+		value_new = (CHAR*)malloc(strlen(value) + 1);
 		if (value_new == NULL) {
+			free(key_new);
+			key_new = NULL;
 			return RES_XALLOC_FAILED;
 		}
+		memset(value_new, 0x00, strlen(value) + 1);
 		strcpy(key_new, key);
 		strcpy(value_new, value);
 		item->key = key_new;
