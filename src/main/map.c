@@ -72,7 +72,10 @@ INT map_remove(Map* obj, const CHAR* key)
 			//从中间删除的场合，要把后边的内存往前移
 			if ((index + 1) != obj->map_used) {
 				//这块有点乱，有空在验证下
-				memcpy(obj->map + index * sizeof(MapItem), obj->map + (index + 1) * sizeof(MapItem), (obj->map_used - index - 1) * sizeof(MapItem));
+				//memcpy(obj->map + index * sizeof(MapItem), obj->map + (index + 1) * sizeof(MapItem), (obj->map_used - index - 1) * sizeof(MapItem));
+				for (INT delete_index = index; delete_index + 1 < obj->map_used; delete_index++) {
+					memcpy(obj->map + delete_index * sizeof(MapItem), obj->map + (delete_index + 1) * sizeof(MapItem), sizeof(MapItem));
+				}
 				obj->map_used--;
 				//往前移动完成后把最后一组置0
 				memset(obj->map + (obj->map_used) * sizeof(MapItem), 0x00, sizeof(MapItem));
