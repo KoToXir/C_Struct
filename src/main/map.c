@@ -5,63 +5,72 @@
 #include "type.h"
 #include "map.h"
 
-
-INT map_get(Map* obj, const CHAR* key, CHAR* value)
+INT map_get(Map *obj, const CHAR *key, CHAR *value)
 {
-	if (obj == NULL || key == NULL) {
+	if (obj == NULL || key == NULL)
+	{
 		return RES_PARAM_FAILED;
 	}
 
-	if (obj->map_size <= 0) {
+	if (obj->map_size <= 0)
+	{
 		return RES_PARAM_FAILED;
 	}
 
-	if (obj->map_used < 0) {
+	if (obj->map_used < 0)
+	{
 		return RES_PARAM_FAILED;
 	}
 
 	BOOL match = FALSE;
-	MapItem* item;
-	for (INT index = 0; index < obj->map_used; index++) {
+	MapItem *item;
+	for (INT index = 0; index < obj->map_used; index++)
+	{
 		item = NULL;
-		item = (MapItem*)obj->map + index * sizeof(MapItem);
+		item = (MapItem *)obj->map + index * sizeof(MapItem);
 		//key is exitis
-		if (item->key != NULL && strcmp(key, item->key) == 0) {
+		if (item->key != NULL && strcmp(key, item->key) == 0)
+		{
 			match = TRUE;
-			strcpy(value,item->value);
+			strcpy(value, item->value);
 			return RES_SUCCESS;
 		}
 	}
 
-	if (match == FALSE) {
+	if (match == FALSE)
+	{
 		return RES_MATCH_FAILED;
 	}
 
 	return RES_SUCCESS;
 }
 
-
-INT map_remove(Map* obj, const CHAR* key)
+INT map_remove(Map *obj, const CHAR *key)
 {
-	if (obj == NULL || key == NULL) {
+	if (obj == NULL || key == NULL)
+	{
 		return RES_PARAM_FAILED;
 	}
 
-	if (obj->map_size <= 0) {
+	if (obj->map_size <= 0)
+	{
 		return RES_PARAM_FAILED;
 	}
 
-	if (obj->map_used < 0) {
+	if (obj->map_used < 0)
+	{
 		return RES_PARAM_FAILED;
 	}
 
 	BOOL match = FALSE;
-	MapItem* item;
-	for (INT index = 0; index < obj->map_used; index++) {
+	MapItem *item;
+	for (INT index = 0; index < obj->map_used; index++)
+	{
 		item = NULL;
-		item = (MapItem*)obj->map + index * sizeof(MapItem);
+		item = (MapItem *)obj->map + index * sizeof(MapItem);
 		//key is exist
-		if (item->key != NULL && strcmp(key, item->key) == 0) {
+		if (item->key != NULL && strcmp(key, item->key) == 0)
+		{
 			match = TRUE;
 			free(item->key);
 			item->key = NULL;
@@ -70,10 +79,12 @@ INT map_remove(Map* obj, const CHAR* key)
 			//把删掉的这块置空
 			memset(item, 0x00, sizeof(MapItem));
 			//从中间删除的场合，要把后边的内存往前移
-			if ((index + 1) != obj->map_used) {
+			if ((index + 1) != obj->map_used)
+			{
 				//这块有点乱，有空在验证下
 				//memcpy(obj->map + index * sizeof(MapItem), obj->map + (index + 1) * sizeof(MapItem), (obj->map_used - index - 1) * sizeof(MapItem));
-				for (INT delete_index = index; delete_index + 1 < obj->map_used; delete_index++) {
+				for (INT delete_index = index; delete_index + 1 < obj->map_used; delete_index++)
+				{
 					memcpy(obj->map + delete_index * sizeof(MapItem), obj->map + (delete_index + 1) * sizeof(MapItem), sizeof(MapItem));
 				}
 				obj->map_used--;
@@ -85,39 +96,46 @@ INT map_remove(Map* obj, const CHAR* key)
 	}
 
 	//key isn't exist
-	if (match == FALSE) {
+	if (match == FALSE)
+	{
 		return RES_MATCH_FAILED;
 	}
 
 	return RES_SUCCESS;
 }
 
-INT map_put(Map* obj, const CHAR* key, const CHAR* value)
+INT map_put(Map *obj, const CHAR *key, const CHAR *value)
 {
-	if (obj == NULL || key == NULL || value == NULL) {
+	if (obj == NULL || key == NULL || value == NULL)
+	{
 		return RES_PARAM_FAILED;
 	}
 
-	if (obj->map_size <= 0) {
+	if (obj->map_size <= 0)
+	{
 		return RES_PARAM_FAILED;
 	}
 
-	if (obj->map_used < 0) {
+	if (obj->map_used < 0)
+	{
 		return RES_PARAM_FAILED;
 	}
 
-	CHAR* key_new = NULL;
-	CHAR* value_new = NULL;
+	CHAR *key_new = NULL;
+	CHAR *value_new = NULL;
 	BOOL match = FALSE;
-	MapItem* item;
-	for (INT index = 0; index < obj->map_used; index++) {
+	MapItem *item;
+	for (INT index = 0; index < obj->map_used; index++)
+	{
 		item = NULL;
-		item = (MapItem*)obj->map + index * sizeof(MapItem);
+		item = (MapItem *)obj->map + index * sizeof(MapItem);
 		//key is exist
-		if (item->key != NULL && strcmp(key, item->key) == 0) {
+		if (item->key != NULL && strcmp(key, item->key) == 0)
+		{
 			//create new space
-			value_new = (CHAR*)malloc(strlen(value) + 1);
-			if (value_new == NULL) {
+			value_new = (CHAR *)malloc(strlen(value) + 1);
+			if (value_new == NULL)
+			{
 				return RES_XALLOC_FAILED;
 			}
 			memset(value_new, 0x00, strlen(value + 1));
@@ -133,33 +151,38 @@ INT map_put(Map* obj, const CHAR* key, const CHAR* value)
 	}
 
 	//key isn't exist
-	if (match == FALSE) {
+	if (match == FALSE)
+	{
 		//size expand if used 75% then up to 150%
 		FLOAT size = obj->map_size;
 		FLOAT used = obj->map_used;
-		FLOAT aim = (used/size);
-		if(used != 0 && aim >= 0.75){
+		FLOAT aim = (used / size);
+		if (used != 0 && aim >= 0.75)
+		{
 			INT size_new = (INT)(used * 1.5 + 1);
 			//1.5=>1 no effictive! aim+1
-			MapItem *map_new = (MapItem*)calloc(size_new, sizeof(MapItem));
-			if(map_new == NULL){
+			MapItem *map_new = (MapItem *)calloc(size_new, sizeof(MapItem));
+			if (map_new == NULL)
+			{
 				return RES_XALLOC_FAILED;
 			}
-			memcpy(map_new,obj->map,obj->map_size * sizeof(MapItem));
+			memcpy(map_new, obj->map, obj->map_size * sizeof(MapItem));
 			free(obj->map);
 			obj->map = map_new;
 			obj->map_size = size_new;
 		}
 
 		//add new item
-		item = (MapItem*)obj->map + obj->map_used * sizeof(MapItem);
-		key_new = (CHAR*)malloc(strlen(key) + 1);
-		if (key_new == NULL) {
+		item = (MapItem *)obj->map + obj->map_used * sizeof(MapItem);
+		key_new = (CHAR *)malloc(strlen(key) + 1);
+		if (key_new == NULL)
+		{
 			return RES_XALLOC_FAILED;
 		}
 		memset(key_new, 0x00, strlen(key) + 1);
-		value_new = (CHAR*)malloc(strlen(value) + 1);
-		if (value_new == NULL) {
+		value_new = (CHAR *)malloc(strlen(value) + 1);
+		if (value_new == NULL)
+		{
 			free(key_new);
 			key_new = NULL;
 			return RES_XALLOC_FAILED;
@@ -169,15 +192,17 @@ INT map_put(Map* obj, const CHAR* key, const CHAR* value)
 		strcpy(value_new, value);
 		item->key = key_new;
 		item->value = value_new;
-		obj->map_used ++;
+		obj->map_used++;
 	}
 
 	return RES_SUCCESS;
 }
 
-INT map_init(Map* obj) {
-	obj->map = (MapItem*)calloc(MAP_INIT_SIZE, sizeof(MapItem));
-	if (obj->map == NULL) {
+INT map_init(Map *obj)
+{
+	obj->map = (MapItem *)calloc(MAP_INIT_SIZE, sizeof(MapItem));
+	if (obj->map == NULL)
+	{
 		return RES_XALLOC_FAILED;
 	}
 	obj->map_size = MAP_INIT_SIZE;
