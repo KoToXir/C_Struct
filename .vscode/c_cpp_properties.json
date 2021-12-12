@@ -4,7 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/src/include**"
+                "${workspaceFolder}/src/include/**"
             ],
             "defines": [
                 "_DEBUG",
@@ -12,7 +12,7 @@
                 "_UNICODE"
             ],
             "compilerPath": "D:/Dev/MinGW64/bin/g++.exe",
-            "cStandard": "c17",
+            "cStandard": "c11",
             "cppStandard": "c++17",
             "intelliSenseMode": "windows-gcc-x64"
         }

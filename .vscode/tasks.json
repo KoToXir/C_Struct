@@ -3,9 +3,13 @@
     "command": "g++",
     "args": [
         "-g",
-        "${file}",
+        // "${file}",
+        "${workspaceRoot}/src/include/**",
+        "${workspaceRoot}/src/main/**",
         "-o",
-        "${fileDirname}/${fileBasenameNoExtension}.exe"
+        // "${fileDirname}/${fileBasenameNoExtension}.exe"
+        "${workspaceRoot}/src/bin/${fileBasenameNoExtension}.exe",
+        "-fdiagnostics-color=always"
     ],
     "problemMatcher": {
         "owner": "cpp",
