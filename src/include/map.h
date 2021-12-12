@@ -19,6 +19,14 @@ typedef struct
 	INT map_used;
 }Map;
 
+typedef struct
+{
+	INT map_size;
+	INT map_used;
+	MapItem map_data[];
+}Map_Arr;
+
+INT map_get(Map *obj, const CHAR *key, CHAR *value);
 int map_remove(Map *obj,const CHAR *key);
 int map_put(Map *obj,const CHAR *key, const CHAR *value);
 int map_init(Map *obj);

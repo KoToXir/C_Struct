@@ -2,7 +2,13 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
+
+#include "compile.h"
+#ifdef VSC_EN
+#include "../include/map.h"
+#else
 #include "map.h"
+#endif
 
 #pragma warning(disable : 4996)
 #define _CRT_SECURE_NO_DEPRECATE
@@ -11,6 +17,12 @@ int main()
 {
 	INT res = 0;
 	/*--------------------------MAP-TEST-START------------------------- */
+
+	Map_Arr *m = (Map_Arr*)malloc(sizeof(Map_Arr)+16*sizeof(MapItem));
+	MapItem m1;
+	memcpy(m->map_data,&m1,sizeof(MapItem));
+	//m->map_data[0] = m1;
+	int c = sizeof(*m);
 	Map map;
 	res = map_init(&map);
 
@@ -18,12 +30,14 @@ int main()
 	{
 		//CHAR loop[] = { 0 };
 		//strcat(loop, __DATE__);	strcat(loop, STRING_SPACE);	strcat(loop, __TIME__);
-		CHAR temp[10];
-		_itoa_s(i, temp, 6, 10);
+		CHAR temp1[10];
+		itoa(i, temp1, 10);
 		CHAR keyloop[] = "KEY-";
-		strcat(keyloop, temp);
+		strcat(keyloop, temp1);
+		CHAR temp2[10];
+		itoa(i, temp2, 10);
 		CHAR valueloop[] = "VALUE-";
-		strcat(valueloop, temp);
+		strcat(valueloop, temp2);
 		res = map_put(&map, keyloop, valueloop);
 		//_sleep(2000);
 	}
@@ -44,29 +58,28 @@ int main()
 	//get ok
 	CHAR get1[] = {0};
 	res = map_get(&map, key1, get1);
-	//printf("get1:%s\n", get1);
-	//printf_s("get1:%s\n", get1);
+	printf("get1:%s\n", get1);
 
 	//put overwrite
 	res = map_put(&map, key1, "999");
 	CHAR get2[] = {0};
 	res = map_get(&map, key1, get2);
-	//printf("get2:%s\n", get2);
+	printf("get2:%s\n", get2);
 
 	//remove ok
 	res = map_remove(&map, key1);
 	CHAR get3[] = {0};
 	res = map_get(&map, key1, get3);
-	//printf("get3:%s\n", get3);
+	printf("get3:%s\n", get3);
 
 	//remove offset
 	CHAR get4[] = {0};
 	res = map_get(&map, key2, get4);
-	//printf("get4:%s\n", get4);
+	printf("get4:%s\n", get4);
 
 	CHAR get5[] = {0};
 	res = map_get(&map, key3, get5);
-	//printf("get5:%s\n", get5);
+	printf("get5:%s\n", get5);
 
 	CHAR loop1[] = "temp1";
 	CHAR loop2[] = "temp2";

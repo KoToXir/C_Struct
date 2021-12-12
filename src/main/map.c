@@ -2,8 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "compile.h"
+#ifdef VSC_EN
+#include "../include/type.h"
+#include "../include/map.h"
+#else
 #include "type.h"
 #include "map.h"
+#endif
 
 INT map_get(Map *obj, const CHAR *key, CHAR *value)
 {
@@ -22,27 +28,19 @@ INT map_get(Map *obj, const CHAR *key, CHAR *value)
 		return RES_PARAM_FAILED;
 	}
 
-	BOOL match = FALSE;
-	MapItem *item;
 	for (INT index = 0; index < obj->map_used; index++)
 	{
-		item = NULL;
-		item = (MapItem *)obj->map + index * sizeof(MapItem);
+		MapItem *item = NULL;
+		item = (MapItem *)(obj->map + index * sizeof(MapItem));
 		//key is exitis
 		if (item->key != NULL && strcmp(key, item->key) == 0)
 		{
-			match = TRUE;
 			strcpy(value, item->value);
 			return RES_SUCCESS;
 		}
 	}
 
-	if (match == FALSE)
-	{
-		return RES_MATCH_FAILED;
-	}
-
-	return RES_SUCCESS;
+	return RES_MATCH_FAILED;
 }
 
 INT map_remove(Map *obj, const CHAR *key)
@@ -63,11 +61,11 @@ INT map_remove(Map *obj, const CHAR *key)
 	}
 
 	BOOL match = FALSE;
-	MapItem *item;
 	for (INT index = 0; index < obj->map_used; index++)
 	{
-		item = NULL;
-		item = (MapItem *)obj->map + index * sizeof(MapItem);
+		
+		MapItem *item = NULL;
+		item = (MapItem *)(obj->map + index * sizeof(MapItem));
 		//key is exist
 		if (item->key != NULL && strcmp(key, item->key) == 0)
 		{
@@ -81,8 +79,7 @@ INT map_remove(Map *obj, const CHAR *key)
 			//从中间删除的场合，要把后边的内存往前移
 			if ((index + 1) != obj->map_used)
 			{
-				//这块有点乱，有空在验证下
-				//memcpy(obj->map + index * sizeof(MapItem), obj->map + (index + 1) * sizeof(MapItem), (obj->map_used - index - 1) * sizeof(MapItem));
+				//逐个往前移动，如果直接整块移后边的无法覆盖前边有数据的地址
 				for (INT delete_index = index; delete_index + 1 < obj->map_used; delete_index++)
 				{
 					memcpy(obj->map + delete_index * sizeof(MapItem), obj->map + (delete_index + 1) * sizeof(MapItem), sizeof(MapItem));
@@ -128,7 +125,7 @@ INT map_put(Map *obj, const CHAR *key, const CHAR *value)
 	for (INT index = 0; index < obj->map_used; index++)
 	{
 		item = NULL;
-		item = (MapItem *)obj->map + index * sizeof(MapItem);
+		item = (MapItem *)(obj->map + index * sizeof(MapItem));
 		//key is exist
 		if (item->key != NULL && strcmp(key, item->key) == 0)
 		{
@@ -161,11 +158,12 @@ INT map_put(Map *obj, const CHAR *key, const CHAR *value)
 		{
 			INT size_new = (INT)(used * 1.5 + 1);
 			//1.5=>1 no effictive! aim+1
-			MapItem *map_new = (MapItem *)calloc(size_new, sizeof(MapItem));
+			MapItem *map_new = (MapItem *)malloc(size_new * sizeof(MapItem));
 			if (map_new == NULL)
 			{
 				return RES_XALLOC_FAILED;
 			}
+			memset(map_new, 0x00, size_new * sizeof(MapItem));
 			memcpy(map_new, obj->map, obj->map_size * sizeof(MapItem));
 			free(obj->map);
 			obj->map = map_new;
@@ -200,11 +198,12 @@ INT map_put(Map *obj, const CHAR *key, const CHAR *value)
 
 INT map_init(Map *obj)
 {
-	obj->map = (MapItem *)calloc(MAP_INIT_SIZE, sizeof(MapItem));
+	obj->map = (MapItem *)malloc(MAP_INIT_SIZE * sizeof(MapItem));
 	if (obj->map == NULL)
 	{
 		return RES_XALLOC_FAILED;
 	}
+	memset(obj->map, 0x00, MAP_INIT_SIZE * sizeof(MapItem));
 	obj->map_size = MAP_INIT_SIZE;
 	obj->map_used = 0;
 	return RES_SUCCESS;
