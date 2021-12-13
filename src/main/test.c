@@ -11,7 +11,6 @@
 #endif
 
 #pragma warning(disable : 4996)
-#define _CRT_SECURE_NO_DEPRECATE
 
 int main()
 {
