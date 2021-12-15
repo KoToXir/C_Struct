@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "compile.h"
-#ifdef VSC_EN
+#ifdef VSC_COMPILE
 #include "../include/type.h"
 #include "../include/map.h"
 #else
@@ -11,7 +11,42 @@
 #include "map.h"
 #endif
 
+//版本区分函数声明
+INT map_get_1_0(Map *obj, const CHAR *key, CHAR *value);
+INT map_remove_1_0(Map *obj, const CHAR *key);
+INT map_put_1_0(Map *obj, const CHAR *key, const CHAR *value);
+INT map_init_1_0(Map *obj);
+
+//实际调用函数
 INT map_get(Map *obj, const CHAR *key, CHAR *value)
+{
+#ifdef MAP_VERSION_1_0
+	return map_get_1_0(obj, key, value);
+#endif
+}
+
+INT map_remove(Map *obj, const CHAR *key)
+{
+#ifdef MAP_VERSION_1_0
+	return map_remove_1_0(obj, key);
+#endif
+}
+
+INT map_put(Map *obj, const CHAR *key, const CHAR *value)
+{
+#ifdef MAP_VERSION_1_0
+	return map_put_1_0(obj, key, value);
+#endif
+}
+
+INT map_init(Map *obj){
+#ifdef MAP_VERSION_1_0
+	return map_init_1_0(obj);
+#endif
+}
+
+//版本区分函数定义
+INT map_get_1_0(Map *obj, const CHAR *key, CHAR *value)
 {
 	if (obj == NULL || key == NULL)
 	{
@@ -43,7 +78,7 @@ INT map_get(Map *obj, const CHAR *key, CHAR *value)
 	return RES_MATCH_FAILED;
 }
 
-INT map_remove(Map *obj, const CHAR *key)
+INT map_remove_1_0(Map *obj, const CHAR *key)
 {
 	if (obj == NULL || key == NULL)
 	{
@@ -63,7 +98,7 @@ INT map_remove(Map *obj, const CHAR *key)
 	BOOL match = FALSE;
 	for (INT index = 0; index < obj->map_used; index++)
 	{
-		
+
 		MapItem *item = NULL;
 		item = (MapItem *)(obj->map + index * sizeof(MapItem));
 		//key is exist
@@ -101,7 +136,7 @@ INT map_remove(Map *obj, const CHAR *key)
 	return RES_SUCCESS;
 }
 
-INT map_put(Map *obj, const CHAR *key, const CHAR *value)
+INT map_put_1_0(Map *obj, const CHAR *key, const CHAR *value)
 {
 	if (obj == NULL || key == NULL || value == NULL)
 	{
@@ -196,7 +231,7 @@ INT map_put(Map *obj, const CHAR *key, const CHAR *value)
 	return RES_SUCCESS;
 }
 
-INT map_init(Map *obj)
+INT map_init_1_0(Map *obj)
 {
 	obj->map = (MapItem *)malloc(MAP_INIT_SIZE * sizeof(MapItem));
 	if (obj->map == NULL)

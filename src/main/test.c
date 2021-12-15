@@ -4,21 +4,19 @@
 #include <stdlib.h>
 
 #include "compile.h"
-#ifdef VSC_EN
+#ifdef VSC_COMPILE
 #include "../include/map.h"
 #else
 #include "map.h"
 #endif
 
 #pragma warning(disable : 4996)
-
-
-static void map_test_1_0();
+void map_test_1_0();
+void map_test_1_1();
 
 int main()
 {
 	INT res = 0;
-	
 
 	//map 1.0 test
 	map_test_1_0();
@@ -28,17 +26,23 @@ int main()
 	return 0;
 }
 
+/* map 1.1 test */
+void map_test_1_1()
+{
+	Map *map = (Map *)malloc(sizeof(Map) + MAP_INIT_SIZE * sizeof(MapItem));
+	// MapItem m1;
+	// memcpy(map->map_data, &m1, sizeof(MapItem));
+	// //m->map_data[0] = m1;
+	// int c = sizeof(*m);
+}
+
 /* map 1.0 test */
-static void map_test_1_0(){
+void map_test_1_0()
+{
 
-	/*--------------------------MAP-TEST-START------------------------- */
 	INT res = 0;
+	/*--------------------------MAP-TEST-START------------------------- */
 
-	Map_Arr *m = (Map_Arr*)malloc(sizeof(Map_Arr)+16*sizeof(MapItem));
-	MapItem m1;
-	memcpy(m->map_data,&m1,sizeof(MapItem));
-	//m->map_data[0] = m1;
-	int c = sizeof(*m);
 	Map map;
 	res = map_init(&map);
 
@@ -105,5 +109,4 @@ static void map_test_1_0(){
 	res = map_put(&map, loop3, loop3);
 
 	/*--------------------------MAP-TEST-END------------------------- */
-
 }
