@@ -12,10 +12,27 @@
 
 #pragma warning(disable : 4996)
 
+
+static void map_test_1_0();
+
 int main()
 {
 	INT res = 0;
+	
+
+	//map 1.0 test
+	map_test_1_0();
+
+	system("pause");
+
+	return 0;
+}
+
+/* map 1.0 test */
+static void map_test_1_0(){
+
 	/*--------------------------MAP-TEST-START------------------------- */
+	INT res = 0;
 
 	Map_Arr *m = (Map_Arr*)malloc(sizeof(Map_Arr)+16*sizeof(MapItem));
 	MapItem m1;
@@ -87,11 +104,6 @@ int main()
 	res = map_put(&map, loop2, loop2);
 	res = map_put(&map, loop3, loop3);
 
-	
 	/*--------------------------MAP-TEST-END------------------------- */
 
-	INT pause = 0;
-	system("pause");
-
-	return 0;
 }
